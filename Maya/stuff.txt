@@ -1,0 +1,9 @@
+brew install sip
+install fbx bindings
+install fbx sdk
+install reality converter
+https://www.autodesk.com/developer-network/platform-technologies/fbx-sdk-2020-0
+https://www.appcoda.com/files-app-integration/
+https://stackoverflow.com/questions/46075606/getting-focal-length-and-focal-point-from-a-projection-matrix
+http://download.nvidia.com/developer/cuda/seminar/TDCI_Arch.pdf
+https://www.cs.cmu.edu/afs/cs/academic/class/15462-f11/www/lec_slides/lec19.pdf
