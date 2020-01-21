@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4C1D7A7723D3FC4E00D4ABC8 /* test.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 4C1D7A7623D3FC4E00D4ABC8 /* test.usdz */; };
+		4C6D3B2723D5470100AA4A99 /* FileWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D3B2623D5470100AA4A99 /* FileWriter.swift */; };
+		4C6D3B2923D6200A00AA4A99 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D3B2823D6200A00AA4A99 /* NewViewController.swift */; };
 		4C76A79223D4161B00E21476 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C76A79123D4161B00E21476 /* AppView.swift */; };
 		4C76A79823D42AB600E21476 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C76A79723D42AB600E21476 /* UtilityFunctions.swift */; };
 		4C76A79A23D4319A00E21476 /* toy_drummer.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 4C76A79923D4319A00E21476 /* toy_drummer.usdz */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		4C1D7A7623D3FC4E00D4ABC8 /* test.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = test.usdz; path = ../../../Maya/test.usdz; sourceTree = "<group>"; };
+		4C6D3B2623D5470100AA4A99 /* FileWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWriter.swift; sourceTree = "<group>"; };
+		4C6D3B2823D6200A00AA4A99 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
 		4C76A79123D4161B00E21476 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		4C76A79723D42AB600E21476 /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		4C76A79923D4319A00E21476 /* toy_drummer.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = toy_drummer.usdz; path = ../../../../../../../../../../../Downloads/toy_drummer.usdz; sourceTree = "<group>"; };
@@ -66,8 +70,10 @@
 			children = (
 				4CDD65B323D176F4009FEFD0 /* AppDelegate.swift */,
 				4CDD65B523D176F4009FEFD0 /* ViewController.swift */,
+				4C6D3B2823D6200A00AA4A99 /* NewViewController.swift */,
 				4C76A79723D42AB600E21476 /* UtilityFunctions.swift */,
 				4C76A79123D4161B00E21476 /* AppView.swift */,
+				4C6D3B2623D5470100AA4A99 /* FileWriter.swift */,
 				4CDD65B723D176F4009FEFD0 /* Experience.rcproject */,
 				4CDD65B923D176F4009FEFD0 /* Main.storyboard */,
 				4C1D7A7623D3FC4E00D4ABC8 /* test.usdz */,
@@ -152,7 +158,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C6D3B2723D5470100AA4A99 /* FileWriter.swift in Sources */,
 				4C76A79223D4161B00E21476 /* AppView.swift in Sources */,
+				4C6D3B2923D6200A00AA4A99 /* NewViewController.swift in Sources */,
 				4C76A79823D42AB600E21476 /* UtilityFunctions.swift in Sources */,
 				4CDD65B623D176F4009FEFD0 /* ViewController.swift in Sources */,
 				4CDD65B423D176F4009FEFD0 /* AppDelegate.swift in Sources */,
