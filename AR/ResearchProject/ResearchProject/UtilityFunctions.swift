@@ -110,3 +110,13 @@ func generateTakeNumberForScene(sceneName: String, projectName: String) -> Int
  print(newMat.columns.3)
  print(frame.camera.transform.columns.3)
  */
+
+
+extension SIMD4
+{
+    var xyz: SIMD3<Float>
+    {
+        return SIMD3<Float>(self.x as! Float, self.y as! Float, self.z as! Float)
+    }
+}
+

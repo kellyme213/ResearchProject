@@ -11,6 +11,7 @@ import UIKit
 
 class NewViewController: UIViewController
 {
+    @IBOutlet var selectView: SelectView!
     //var newView: UIView
     var myString: String!
     /*
@@ -37,5 +38,7 @@ class NewViewController: UIViewController
         button.center = CGPoint(x: 100, y: 100)
         button.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
         view.addSubview(button)
+        
+        selectView.addStuffToView()
     }
 }

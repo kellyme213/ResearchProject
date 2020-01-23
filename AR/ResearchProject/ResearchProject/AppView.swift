@@ -15,8 +15,10 @@ class AppView: ARView, ARSessionDelegate
 
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         //print(frame.timestamp)
-        //print(frame.camera.transform.columns.3)
-
+        if (added)
+        {
+            print(frame.camera.transform.columns.3)
+        }
         
         
     }
@@ -33,16 +35,23 @@ class AppView: ARView, ARSessionDelegate
                 let planeAnchor = anchor as? ARPlaneAnchor
                 if (planeAnchor != nil)
                 {
-                    session.setWorldOrigin(relativeTransform: planeAnchor!.transform)
                     
                     let plane = AnchorEntity.init(anchor: planeAnchor!)
+                    plane.transform.matrix = planeAnchor!.transform
                     
                     let e = try! Entity.load(contentsOf:
                         getLibraryFilePath().appendingPathComponent(SCENE_FOLDER_NAME + "test.usdz"))
+                    //e.transform.matrix = planeAnchor!.transform
+                    //print(e.transform)
+                    plane.transform.scale = SIMD3<Float>(repeating: 10)
+                    //e.transform.translation = -planeAnchor!.transform.columns.3.xyz
                     plane.addChild(e)
                     scene.addAnchor(plane)
+                    //print(e.position)
                     
                     e.playAnimation(e.availableAnimations[0].repeat(), transitionDuration: 0.0, startsPaused: false)
+                    session.setWorldOrigin(relativeTransform: planeAnchor!.transform)
+
                 }
                        
                 //let str = "hello"
