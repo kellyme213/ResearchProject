@@ -8,20 +8,7 @@
 
 import UIKit
 import Foundation
-class SelectView: UIView, UITextFieldDelegate
+class SelectView: UIView
 {
-    @IBOutlet var table: UITableView!
-    @IBOutlet var text: UITextField!
-    
-    func addStuffToView()
-    {
-        print("hello")
-        text.delegate = self
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        text.resignFirstResponder()
-        return true
-    }
     
 }
