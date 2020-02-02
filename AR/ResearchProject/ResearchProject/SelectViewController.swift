@@ -16,7 +16,6 @@ class SelectViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     @IBOutlet var text: UITextField!
     @IBOutlet var sceneLabel: UILabel!
     
-    var myString: String!
     var urlPaths: [URL] = []
     
     var selectedScene: String!
@@ -24,11 +23,21 @@ class SelectViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     
     override func viewDidLoad() {
         
-        urlPaths = getFilesWithFileType(fileType: "usdz")
+        urlPaths = getFilesWithFileType(folder: SCENE_FOLDER_NAME, fileType: "usdz")
 
         text.delegate = self
         table.delegate = self
         table.dataSource = self
+        
+        if (selectedScene != nil)
+        {
+            sceneLabel.text! = selectedScene
+        }
+        
+        if (selectedProject != nil)
+        {
+            text.text! = selectedProject
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -43,7 +52,7 @@ class SelectViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)!
         let cellText = cell.textLabel!.text!
-        selectedScene = cellText
+        selectedScene = cellText.split(separator: ".")[0].description
         sceneLabel.text = selectedScene
     }
     

@@ -15,7 +15,6 @@
 		4C76A79823D42AB600E21476 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C76A79723D42AB600E21476 /* UtilityFunctions.swift */; };
 		4CDD65B423D176F4009FEFD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDD65B323D176F4009FEFD0 /* AppDelegate.swift */; };
 		4CDD65B623D176F4009FEFD0 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDD65B523D176F4009FEFD0 /* ARViewController.swift */; };
-		4CDD65B823D176F4009FEFD0 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 4CDD65B723D176F4009FEFD0 /* Experience.rcproject */; };
 		4CDD65BB23D176F4009FEFD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CDD65B923D176F4009FEFD0 /* Main.storyboard */; };
 		4CDD65BD23D176F6009FEFD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CDD65BC23D176F6009FEFD0 /* Assets.xcassets */; };
 		4CDD65C023D176F6009FEFD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CDD65BE23D176F6009FEFD0 /* LaunchScreen.storyboard */; };
@@ -31,7 +30,6 @@
 		4CDD65B023D176F4009FEFD0 /* ResearchProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResearchProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CDD65B323D176F4009FEFD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CDD65B523D176F4009FEFD0 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
-		4CDD65B723D176F4009FEFD0 /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
 		4CDD65BA23D176F4009FEFD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4CDD65BC23D176F6009FEFD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CDD65BF23D176F6009FEFD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 				4C76A79123D4161B00E21476 /* AppView.swift */,
 				4C68163D23DA12FB00580723 /* SelectView.swift */,
 				4C6D3B2623D5470100AA4A99 /* FileWriter.swift */,
-				4CDD65B723D176F4009FEFD0 /* Experience.rcproject */,
 				4CDD65B923D176F4009FEFD0 /* Main.storyboard */,
 				4C1D7A7623D3FC4E00D4ABC8 /* test.usdz */,
 				4CDD65BC23D176F6009FEFD0 /* Assets.xcassets */,
@@ -164,7 +161,6 @@
 				4CDD65B623D176F4009FEFD0 /* ARViewController.swift in Sources */,
 				4CDD65B423D176F4009FEFD0 /* AppDelegate.swift in Sources */,
 				4C68163E23DA12FB00580723 /* SelectView.swift in Sources */,
-				4CDD65B823D176F4009FEFD0 /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,10 +17,9 @@ func getLibraryFilePath() -> URL
     return urls[0]
 }
 
-func getFilesWithFileType(fileType: String) -> [URL]
+func getFilesWithFileType(folder: String, fileType: String) -> [URL]
 {
-    let libraryPath = getLibraryFilePath().appendingPathComponent(SCENE_FOLDER_NAME)
-    
+    let libraryPath = getLibraryFilePath().appendingPathComponent(folder)
     let urls = try! FileManager.default.contentsOfDirectory(at: libraryPath,
                                                             includingPropertiesForKeys: .none,
                                                             options: .includesDirectoriesPostOrder)
@@ -56,12 +55,11 @@ func generateOutputFileName(sceneName: String, projectName: String, take: Int) -
 
 func generateTakeNumberForScene(sceneName: String, projectName: String) -> Int
 {
-    let urls = getFilesWithFileType(fileType: "camout")
+    let urls = getFilesWithFileType(folder: OUTPUT_FOLDER_NAME, fileType: "camout")
     
     for x in 1..<100
     {
         let fileName = generateOutputFileName(sceneName: sceneName, projectName: projectName, take: x)
-        
         var found = false
         for url in urls
         {

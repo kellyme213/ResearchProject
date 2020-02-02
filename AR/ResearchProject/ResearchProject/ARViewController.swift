@@ -17,6 +17,10 @@ class ARViewController: UIViewController {
     var sceneName: String!
     var take: Int!
     let scaleLabel = UILabel()
+    let startButtonVal = 0
+    let pauseButtonVal = 1
+    var startPressed = false
+    var pausePressed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,7 @@ class ARViewController: UIViewController {
         //print(generateOutputFileName(sceneName: sceneName, projectName: projectName, take: take))
         
         appView.sceneName = sceneName
+        appView.projectName = projectName
         
         appView.session.delegate = appView
 
@@ -37,12 +42,16 @@ class ARViewController: UIViewController {
         startButton.frame = CGRect(x: 0, y: 50, width: 100, height: 20)
         startButton.setTitleColor(.systemRed, for: .normal)
         startButton.setTitle("start", for: .normal)
+        startButton.tag = startButtonVal
+        startButton.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchDown)
         appView.addSubview(startButton)
         
         let pauseButton = UIButton()
         pauseButton.frame = CGRect(x: 100, y: 50, width: 100, height: 20)
         pauseButton.setTitleColor(.systemRed, for: .normal)
         pauseButton.setTitle("pause", for: .normal)
+        pauseButton.tag = pauseButtonVal
+        pauseButton.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchDown)
         appView.addSubview(pauseButton)
         
         let fileLabel = UILabel()
@@ -81,8 +90,44 @@ class ARViewController: UIViewController {
         appView.adjustScale(s: sender.value)
     }
     
-    @objc func labelTapped(sender: UIButton)
+    @objc func buttonTapped(sender: UIButton)
     {
+        if (sender.tag == startButtonVal)
+        {
+            if (!startPressed)
+            {
+                startPressed = true
+                sender.setTitle("stop", for: .normal)
+                //start recording
+                appView.beginRecording()
+            }
+            else
+            {
+                startPressed = false
+                sender.setTitle("start", for: .normal)
+                //stop recording
+                appView.endRecording()
+                appView.session.pause()
+                self.performSegue(withIdentifier: "toSelectView", sender: nil)
+            }
+        }
+        else if (sender.tag == pauseButtonVal)
+        {
+            if (!pausePressed)
+            {
+                pausePressed = true
+                sender.setTitle("resume", for: .normal)
+                //pause recording and animation
+            }
+            else
+            {
+                pausePressed = false
+                sender.setTitle("pause", for: .normal)
+                //resume recording and animation
+            }
+        }
+        
+        
         //appView.session.pause()
         //self.performSegue(withIdentifier: "toSelectView", sender: nil)
     }
@@ -90,7 +135,9 @@ class ARViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "toSelectView")
         {
-            //let view = segue.destination as! NewViewController
+            let viewController = segue.destination as! SelectViewController
+            viewController.selectedProject = projectName
+            viewController.selectedScene = sceneName
         }
     }
 }

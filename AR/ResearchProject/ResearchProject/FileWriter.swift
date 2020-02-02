@@ -42,8 +42,8 @@ class FileWriter
     {
         self.projectName = projectName
         self.sceneName = sceneName
-        self.take = generateTakeNumberForScene(sceneName: self.projectName,
-                                               projectName: self.sceneName)
+        self.take = generateTakeNumberForScene(sceneName: self.sceneName,
+                                               projectName: self.projectName)
         initializeFile()
     }
     
@@ -52,6 +52,7 @@ class FileWriter
         self.fileName = generateOutputFileName(sceneName: sceneName,
                                                projectName: projectName,
                                                take: take)
+        print(self.fileName!)
     }
     
     func pause()
