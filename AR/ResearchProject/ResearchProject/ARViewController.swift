@@ -65,7 +65,7 @@ class ARViewController: UIViewController {
         
         let scaleSlider = UISlider()
         scaleSlider.minimumValue = 1.0
-        scaleSlider.maximumValue = 10.0
+        scaleSlider.maximumValue = 50.0
         scaleSlider.setValue(1.0, animated: false)
         scaleSlider.frame = CGRect(x: 200, y: 50, width: 200, height: 20)
         scaleSlider.addTarget(self, action: #selector(sliderChanged(sender:)), for: .valueChanged)
