@@ -25,3 +25,4 @@ DerivedData/
 ## Gcc Patch
 /*.gcno
 *.mayaSwatches/
+Maya/__pycache__/
