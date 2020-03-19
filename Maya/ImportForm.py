@@ -7,23 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PySide2 import QtWidgets 
-from PySide2.QtGui import QFont  
-from PySide2.QtCore import QTimer
-from PySide2 import QtCore
-from pymel.core import *
-from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication
-from PySide2.QtCore import QFile
+from PySide2 import QtCore, QtGui, QtWidgets
 
 
-class Ui_ImportForm(QWidget):
+class Ui_ImportForm(object):
     def setupUi(self, ImportForm):
         ImportForm.setObjectName("ImportForm")
         ImportForm.resize(347, 288)
-        self.cameraListView = QtWidgets.QListView(ImportForm)
-        self.cameraListView.setGeometry(QtCore.QRect(10, 30, 171, 192))
-        self.cameraListView.setObjectName("cameraListView")
         self.refreshCameraButton = QtWidgets.QPushButton(ImportForm)
         self.refreshCameraButton.setGeometry(QtCore.QRect(10, 230, 161, 32))
         self.refreshCameraButton.setObjectName("refreshCameraButton")
@@ -43,11 +33,15 @@ class Ui_ImportForm(QWidget):
         self.selectButton.setGeometry(QtCore.QRect(210, 30, 112, 32))
         self.selectButton.setObjectName("selectButton")
         self.selectedFileLabel = QtWidgets.QLabel(ImportForm)
-        self.selectedFileLabel.setGeometry(QtCore.QRect(210, 60, 58, 16))
+        self.selectedFileLabel.setGeometry(QtCore.QRect(210, 60, 131, 41))
+        self.selectedFileLabel.setWordWrap(True)
         self.selectedFileLabel.setObjectName("selectedFileLabel")
         self.fpsTextEdit = QtWidgets.QTextEdit(ImportForm)
         self.fpsTextEdit.setGeometry(QtCore.QRect(210, 130, 104, 25))
         self.fpsTextEdit.setObjectName("fpsTextEdit")
+        self.cameraListWidget = QtWidgets.QListWidget(ImportForm)
+        self.cameraListWidget.setGeometry(QtCore.QRect(10, 30, 181, 192))
+        self.cameraListWidget.setObjectName("cameraListWidget")
 
         self.retranslateUi(ImportForm)
         QtCore.QMetaObject.connectSlotsByName(ImportForm)

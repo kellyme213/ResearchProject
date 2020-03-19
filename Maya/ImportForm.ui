@@ -13,16 +13,6 @@
   <property name="windowTitle">
    <string>Import</string>
   </property>
-  <widget class="QListView" name="cameraListView">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>30</y>
-     <width>171</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="refreshCameraButton">
    <property name="geometry">
     <rect>
@@ -106,12 +96,15 @@
     <rect>
      <x>210</x>
      <y>60</y>
-     <width>58</width>
-     <height>16</height>
+     <width>131</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
     <string>TextLabel</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QTextEdit" name="fpsTextEdit">
@@ -121,6 +114,16 @@
      <y>130</y>
      <width>104</width>
      <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="cameraListWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>181</width>
+     <height>192</height>
     </rect>
    </property>
   </widget>
