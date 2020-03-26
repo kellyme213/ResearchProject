@@ -38,10 +38,13 @@ class AppView: ARView, ARSessionDelegate
 
             let newPosition = (plane.transform.matrix.inverse * frame.camera.transform.columns.3).xyz
             //let newPosition = (frame.camera.transform.columns.3.xyz - planePosition) / scale
-            
+            //let eAngles = frame.camera.eulerAngles
+            //let newT = Transform.init(pitch: eAngles.x, yaw: eAngles.y, roll: eAngles.z)
+            //let newT2 = plane.transform.matrix.inverse * newT.matrix
+            //let newT3 = Transform.init(matrix: newT2)
             fileWriter.addDataPoint(timestamp: Float(frame.timestamp),
                                     position: newPosition,
-                                    eulerAngles: frame.camera.eulerAngles - angles)
+                                    eulerAngles: frame.camera.eulerAngles)
             //print(planePosition)
             
         }

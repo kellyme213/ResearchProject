@@ -26,3 +26,5 @@ DerivedData/
 /*.gcno
 *.mayaSwatches/
 Maya/__pycache__/
+
+Videos/
