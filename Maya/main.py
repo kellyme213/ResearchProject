@@ -6,6 +6,7 @@ import os
 import ImportForm
 import imp
 import pymel.core as pm
+import FileReader
 
 #http://www.brechtos.com/using-qt-designer-pyside-create-maya-2014-editor-windows/
 from PySide2 import QtWidgets, QtCore
@@ -25,12 +26,14 @@ class ControlMainWindow(QtWidgets.QDialog):
         self.ui.setupUi(self)
         self.ui.refreshCameraButton.clicked.connect(self.refreshButtonPushed)
         self.ui.selectButton.clicked.connect(self.openFileNameDialog)
+        self.ui.bakeButton.clicked.connect(self.bakeButtonPressed)
     
     def refreshButtonPushed(self):
         cameras = pm.ls('*', ca = True)
         self.ui.cameraListWidget.clear()
         for node in cameras:
-            self.ui.cameraListWidget.addItem(node.name())
+            parent = pm.listRelatives(node.name(), p=True)[0]
+            self.ui.cameraListWidget.addItem(parent.name())
     
     def openFileNameDialog(self):
         options = QFileDialog.Options()
@@ -38,7 +41,19 @@ class ControlMainWindow(QtWidgets.QDialog):
         if fileName:
             self.ui.selectedFileLabel.setText(fileName)
     
-                
+    def bakeButtonPressed(self):
+        file = self.ui.selectedFileLabel.text()
+        camera = self.ui.cameraListWidget.currentItem().text()
+        reader = FileReader.FileReader(file)
+        fps = mel.eval('currentTimeUnitToFPS()')
+        for line in reader.data:
+            pm.setKeyframe(camera, at = 'translateX', v = 100 * line[1], t = [line[0] * fps])
+            pm.setKeyframe(camera, at = 'translateY', v = 100 * line[2], t = [line[0] * fps])
+            pm.setKeyframe(camera, at = 'translateZ', v = 100 * line[3], t = [line[0] * fps])
+            pm.setKeyframe(camera, at = 'rotateX', v = 180 * line[4] / 3.14, t = [line[0] * fps])
+            pm.setKeyframe(camera, at = 'rotateY', v = 180 * line[5] / 3.14, t = [line[0] * fps])
+            pm.setKeyframe(camera, at = 'rotateZ', v = 180 * line[6] / 3.14, t = [line[0] * fps])
+
     def someFunc(self):
         print 'Hello {0} !'
         
@@ -47,3 +62,4 @@ if __name__ == "__main__":
     imp.reload(ImportForm)
     myWin = ControlMainWindow(parent=maya_main_window())
     myWin.show()
+    print(mel.eval('currentTimeUnitToFPS()'))

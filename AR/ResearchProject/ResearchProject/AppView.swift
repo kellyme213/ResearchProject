@@ -18,6 +18,8 @@ class AppView: ARView, ARSessionDelegate
     var scale: Float = 1.0
     var recording: Bool = false
     var fileWriter: FileWriter!
+    var planePosition = SIMD3<Float>()
+    var angles = SIMD3<Float>()
     
     func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
         //print("hello")
@@ -32,9 +34,15 @@ class AppView: ARView, ARSessionDelegate
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         if (recording)
         {
+            guard let plane = scene.findEntity(named: "planeEntity") else { return }
+
+            let newPosition = (plane.transform.matrix.inverse * frame.camera.transform.columns.3).xyz
+            //let newPosition = (frame.camera.transform.columns.3.xyz - planePosition) / scale
+            
             fileWriter.addDataPoint(timestamp: Float(frame.timestamp),
-                                    position: frame.camera.transform.columns.3.xyz / scale,
-                                    eulerAngles: frame.camera.eulerAngles)
+                                    position: newPosition,
+                                    eulerAngles: frame.camera.eulerAngles - angles)
+            //print(planePosition)
             
         }
     }
@@ -95,6 +103,8 @@ class AppView: ARView, ARSessionDelegate
                         //e.playAnimation(e.availableAnimations[0].repeat(), transitionDuration: 0.0, startsPaused: false)
                     }
 
+                    planePosition = planeAnchor!.transform.columns.3.xyz
+                    angles = session.currentFrame!.camera.eulerAngles
                     session.setWorldOrigin(relativeTransform: planeAnchor!.transform)
                 }
             }
