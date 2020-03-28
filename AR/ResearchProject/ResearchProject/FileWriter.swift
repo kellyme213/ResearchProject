@@ -34,7 +34,7 @@ class FileWriter
     var sceneName: String
     
     var fileName: String!
-    var timestampStart: Float!
+    var timestampStart: Double!
     var begunWriting: Bool = false
     var data: [FileWriterDataPoint] = []
     
@@ -60,14 +60,14 @@ class FileWriter
         begunWriting = false
     }
     
-    func addDataPoint(timestamp: Float, position: SIMD3<Float>, eulerAngles: SIMD3<Float>)
+    func addDataPoint(timestamp: Double, position: SIMD3<Float>, eulerAngles: SIMD3<Float>)
     {
         if (!begunWriting)
         {
             begunWriting = true
             timestampStart = timestamp
         }
-        let dataPoint = FileWriterDataPoint(timestamp: timestamp - timestampStart,
+        let dataPoint = FileWriterDataPoint(timestamp: Float(timestamp - timestampStart),
                                             position: position,
                                             eulerAngles: eulerAngles)
         data.append(dataPoint)

@@ -46,20 +46,55 @@ class ControlMainWindow(QtWidgets.QDialog):
         camera = self.ui.cameraListWidget.currentItem().text()
         reader = FileReader.FileReader(file)
         fps = mel.eval('currentTimeUnitToFPS()')
-        for line in reader.data:
-            pm.setKeyframe(camera, at = 'translateX', v = 100 * line[1], t = [line[0] * fps])
-            pm.setKeyframe(camera, at = 'translateY', v = 100 * line[2], t = [line[0] * fps])
-            pm.setKeyframe(camera, at = 'translateZ', v = 100 * line[3], t = [line[0] * fps])
-            pm.setKeyframe(camera, at = 'rotateX', v = 180 * line[4] / 3.14, t = [line[0] * fps])
-            pm.setKeyframe(camera, at = 'rotateY', v = 180 * line[5] / 3.14, t = [line[0] * fps])
-            pm.setKeyframe(camera, at = 'rotateZ', v = 180 * line[6] / 3.14, t = [line[0] * fps])
+        newPoints = bakeKeys(reader.data, fps)
+        for line in newPoints:
+            pm.setKeyframe(camera, at = 'translateX', v = 100 * line[1], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateY', v = 100 * line[2], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateZ', v = 100 * line[3], t = [line[0]])
+            pm.setKeyframe(camera, at = 'rotateX', v = 180 * line[4] / 3.14, t = [line[0]])
+            pm.setKeyframe(camera, at = 'rotateY', v = 180 * line[5] / 3.14, t = [line[0]])
+            pm.setKeyframe(camera, at = 'rotateZ', v = 180 * line[6] / 3.14, t = [line[0]])
+     
+     
+def sample(time, dataPoints, startLocation):
+    numPoints = len(dataPoints)
+    for x in range(startLocation, numPoints - 1):
+        if (dataPoints[x + 1][0] > time):
+            deltaT = dataPoints[x + 1][0] - dataPoints[x][0]
+            alpha = (time - dataPoints[x][0]) / deltaT
+            newPoint = []
+            for y in range(0, len(dataPoints[x])):
+                newPoint.append((1.0 - alpha) * dataPoints[x + 1][y] + alpha * dataPoints[x][y])
+            return (newPoint, x)
+            
+    return ([], -1)
+            
+            
+            
+def bakeKeys(dataPoints, fps):
+    timeSlice = 1.0 / float(fps)
+    newPoints = []
+    numNewPoints = 1
+    
+    time = 0.0
+    currentIndex = 0
+    point = []
+    tuple = sample(time, dataPoints, currentIndex)
+    point = tuple[0]
+    currentIndex = tuple[1]
+    
+    while (len(point) > 0):
+        point[0] = numNewPoints
+        numNewPoints += 1
+        newPoints.append(point)
+        time += timeSlice
+        tuple = sample(time, dataPoints, currentIndex)
+        point = tuple[0]
+        currentIndex = tuple[1]
+    return newPoints
 
-    def someFunc(self):
-        print 'Hello {0} !'
-        
-                
 if __name__ == "__main__":
     imp.reload(ImportForm)
     myWin = ControlMainWindow(parent=maya_main_window())
     myWin.show()
-    print(mel.eval('currentTimeUnitToFPS()'))
+    #print(mel.eval('currentTimeUnitToFPS()'))

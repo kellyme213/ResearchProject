@@ -42,7 +42,7 @@ class AppView: ARView, ARSessionDelegate
             //let newT = Transform.init(pitch: eAngles.x, yaw: eAngles.y, roll: eAngles.z)
             //let newT2 = plane.transform.matrix.inverse * newT.matrix
             //let newT3 = Transform.init(matrix: newT2)
-            fileWriter.addDataPoint(timestamp: Float(frame.timestamp),
+            fileWriter.addDataPoint(timestamp: (Date().timeIntervalSinceReferenceDate),
                                     position: newPosition,
                                     eulerAngles: frame.camera.eulerAngles)
             //print(planePosition)
@@ -75,6 +75,12 @@ class AppView: ARView, ARSessionDelegate
         scale = s
         guard let plane = scene.findEntity(named: "planeEntity") else { return }
         plane.transform.scale = SIMD3<Float>(repeating: scale)
+    }
+    
+    func adjustPosition(p: SIMD3<Float>)
+    {
+        guard let plane = scene.findEntity(named: "planeEntity") else { return }
+        plane.transform.translation = p
     }
     
     var added = false
