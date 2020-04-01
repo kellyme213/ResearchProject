@@ -12,6 +12,13 @@ class FileReader:
 				float(lineData[3]), 
 				float(lineData[4]), 
 				float(lineData[5]),
-				float(lineData[6])
+				float(lineData[6]),
+				float(lineData[7]),
+				float(lineData[8]),
+				float(lineData[9]),
+				float(lineData[10]),
+				float(lineData[11]),
+				float(lineData[12])
+
 			]
 			self.data.append(floatData)

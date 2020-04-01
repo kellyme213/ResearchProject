@@ -20,6 +20,7 @@ class AppView: ARView, ARSessionDelegate
     var fileWriter: FileWriter!
     var planePosition = SIMD3<Float>()
     var angles = SIMD3<Float>()
+    var p2 = SIMD3<Float>()
     
     func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
         //print("hello")
@@ -30,6 +31,39 @@ class AppView: ARView, ARSessionDelegate
         }
 
     }
+    
+    
+    
+    func quaternionToEulerAngles(q: simd_quatf) -> SIMD3<Float>
+    {
+        
+        var angles = SIMD3<Float>()
+        
+        // roll (x-axis rotation)
+        let sinr_cosp = 2.0 * (q.w * q.x + q.y * q.z)
+        let cosr_cosp = 1.0 - 2.0 * (q.x * q.x + q.y * q.y)
+        angles.z = atan2(sinr_cosp, cosr_cosp) + 3.14
+
+        // pitch (y-axis rotation)
+        let sinp = 2 * (q.w * q.y - q.z * q.x)
+        if abs(sinp) >= 1
+        {
+            angles.y = copysign(Float.pi / 2.0, sinp) // use 90 degrees if out of range
+
+        }
+        else
+        {
+            angles.y = asin(sinp)
+        }
+
+        // yaw (z-axis rotation)
+        let siny_cosp = 2 * (q.w * q.z + q.x * q.y)
+        let cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z)
+        angles.x = atan2(siny_cosp, cosy_cosp)
+
+        return angles
+    }
+    
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         if (recording)
@@ -42,9 +76,22 @@ class AppView: ARView, ARSessionDelegate
             //let newT = Transform.init(pitch: eAngles.x, yaw: eAngles.y, roll: eAngles.z)
             //let newT2 = plane.transform.matrix.inverse * newT.matrix
             //let newT3 = Transform.init(matrix: newT2)
+            
+            var transformationMatrix = plane.transform.matrix.inverse * frame.camera.transform
+//
+//            let q = simd_quatf(transformationMatrix)
+//            let a = quaternionToEulerAngles(q: q)
+//            print(a)
+//            print(frame.camera.eulerAngles)
+//            print("")
+            //print(q)
+            
             fileWriter.addDataPoint(timestamp: (Date().timeIntervalSinceReferenceDate),
-                                    position: newPosition,
-                                    eulerAngles: frame.camera.eulerAngles)
+                                    matrix: transformationMatrix)
+            
+//            fileWriter.addDataPoint(timestamp: (Date().timeIntervalSinceReferenceDate),
+//                                    position: newPosition,
+//                                    eulerAngles: frame.camera.eulerAngles)
             //print(planePosition)
             
         }
@@ -80,7 +127,8 @@ class AppView: ARView, ARSessionDelegate
     func adjustPosition(p: SIMD3<Float>)
     {
         guard let plane = scene.findEntity(named: "planeEntity") else { return }
-        plane.transform.translation = p
+        plane.transform.translation = p + planePosition
+        p2 = p
     }
     
     var added = false
@@ -119,4 +167,11 @@ class AppView: ARView, ARSessionDelegate
             }
         }
     }
+}
+
+extension simd_quatf{
+    var x: Float {return real}
+    var y: Float {return imag.x}
+    var z: Float {return imag.y}
+    var w: Float {return imag.z}
 }

@@ -6,7 +6,9 @@ import os
 import ImportForm
 import imp
 import pymel.core as pm
+import pymel.core.datatypes as dtypes
 import FileReader
+imp.reload(FileReader)
 
 #http://www.brechtos.com/using-qt-designer-pyside-create-maya-2014-editor-windows/
 from PySide2 import QtWidgets, QtCore
@@ -47,13 +49,27 @@ class ControlMainWindow(QtWidgets.QDialog):
         reader = FileReader.FileReader(file)
         fps = mel.eval('currentTimeUnitToFPS()')
         newPoints = bakeKeys(reader.data, fps)
+        matrix = dtypes.TransformationMatrix()
         for line in newPoints:
+            matrix.a00 = line[4]
+            matrix.a01 = line[5]
+            matrix.a02 = line[6]
+            matrix.a10 = line[7]
+            matrix.a11 = line[8]
+            matrix.a12 = line[9]
+            matrix.a20 = line[10]
+            matrix.a21 = line[11]
+            matrix.a22 = line[12]
+            
+            eulerAngles = matrix.euler
+            #print(eulerAngles)
+            
             pm.setKeyframe(camera, at = 'translateX', v = 100 * line[1], t = [line[0]])
             pm.setKeyframe(camera, at = 'translateY', v = 100 * line[2], t = [line[0]])
             pm.setKeyframe(camera, at = 'translateZ', v = 100 * line[3], t = [line[0]])
-            pm.setKeyframe(camera, at = 'rotateX', v = 180 * line[4] / 3.14, t = [line[0]])
-            pm.setKeyframe(camera, at = 'rotateY', v = 180 * line[5] / 3.14, t = [line[0]])
-            pm.setKeyframe(camera, at = 'rotateZ', v = 180 * line[6] / 3.14, t = [line[0]])
+            pm.setKeyframe(camera, at = 'rotateX', v = 180 * eulerAngles[0] / 3.14, t = [line[0]])
+            pm.setKeyframe(camera, at = 'rotateY', v = 180 * eulerAngles[1] / 3.14, t = [line[0]])
+            pm.setKeyframe(camera, at = 'rotateZ', v = 180 * eulerAngles[2] / 3.14, t = [line[0]])
      
      
 def sample(time, dataPoints, startLocation):
@@ -97,4 +113,3 @@ if __name__ == "__main__":
     imp.reload(ImportForm)
     myWin = ControlMainWindow(parent=maya_main_window())
     myWin.show()
-    #print(mel.eval('currentTimeUnitToFPS()'))

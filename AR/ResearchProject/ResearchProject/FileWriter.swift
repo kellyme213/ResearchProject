@@ -7,23 +7,46 @@
 //
 
 import Foundation
+import simd
 
 struct FileWriterDataPoint
 {
-    var timestamp: Float
-    var position: SIMD3<Float>
-    var eulerAngles: SIMD3<Float>
+    var timestamp: Float!
+    var position: SIMD3<Float>!
+    var eulerAngles: SIMD3<Float>!
+    var matrix: simd_float4x4!
+    var type: Int = 0
 
     func toString() -> String
     {
-        return
-            String(timestamp) + " " +
-            String(position[0]) + " " +
-            String(position[1]) + " " +
-            String(position[2]) + " " +
-            String(eulerAngles[0]) + " " +
-            String(eulerAngles[1]) + " " +
-            String(eulerAngles[2]) + " " + "\n"
+        if (type == 0)
+        {
+            return
+                String(timestamp) + " " +
+                String(position[0]) + " " +
+                String(position[1]) + " " +
+                String(position[2]) + " " +
+                String(eulerAngles[0]) + " " +
+                String(eulerAngles[1]) + " " +
+                String(eulerAngles[2]) + " " + "\n"
+        }
+        else
+        {
+            return
+                String(timestamp) + " " +
+                String(matrix.columns.3.x) + " " +
+                String(matrix.columns.3.y) + " " +
+                String(matrix.columns.3.z) + " " +
+                String(matrix.columns.0.x) + " " +
+                String(matrix.columns.0.y) + " " +
+                String(matrix.columns.0.z) + " " +
+                String(matrix.columns.1.x) + " " +
+                String(matrix.columns.1.y) + " " +
+                String(matrix.columns.1.z) + " " +
+                String(matrix.columns.2.x) + " " +
+                String(matrix.columns.2.y) + " " +
+                String(matrix.columns.2.z) + " " + "\n"
+        }
     }
 }
 
@@ -67,9 +90,24 @@ class FileWriter
             begunWriting = true
             timestampStart = timestamp
         }
-        let dataPoint = FileWriterDataPoint(timestamp: Float(timestamp - timestampStart),
-                                            position: position,
-                                            eulerAngles: eulerAngles)
+        var dataPoint = FileWriterDataPoint()
+        dataPoint.timestamp = Float(timestamp - timestampStart)
+        dataPoint.position = position
+        dataPoint.eulerAngles = eulerAngles
+        data.append(dataPoint)
+    }
+    
+    func addDataPoint(timestamp: Double, matrix: simd_float4x4)
+    {
+        if (!begunWriting)
+        {
+            begunWriting = true
+            timestampStart = timestamp
+        }
+        var dataPoint = FileWriterDataPoint()
+        dataPoint.timestamp = Float(timestamp - timestampStart)
+        dataPoint.matrix = matrix
+        dataPoint.type = 1
         data.append(dataPoint)
     }
     
