@@ -81,35 +81,6 @@ func generateTakeNumberForScene(sceneName: String, projectName: String) -> Int
     return -1
 }
 
-
-
-
-/*
- let roll  = frame.camera.eulerAngles[0]
- let pitch = frame.camera.eulerAngles[1]
- let yaw   = frame.camera.eulerAngles[2]
- 
- let cy: Float = cos(yaw * 0.5)
- let sy: Float = sin(yaw * 0.5)
- let cp: Float = cos(pitch * 0.5)
- let sp: Float = sin(pitch * 0.5)
- let cr: Float = cos(roll * 0.5)
- let sr: Float = sin(roll * 0.5)
- 
- var q = simd_quatf.init()
- q.vector[3] = cy * cp * cr + sy * sp * sr
- q.vector[0] = cy * cp * sr - sy * sp * cr
- q.vector[1] = sy * cp * sr + cy * sp * cr
- q.vector[2] = sy * cp * cr - cy * sp * sr
- 
- let rotateMatrix = simd_float4x4.init(q)
- let newMat = frame.camera.transform * rotateMatrix.inverse
- print("t")
- print(newMat.columns.3)
- print(frame.camera.transform.columns.3)
- */
-
-
 extension SIMD4
 {
     var xyz: SIMD3<Float>
