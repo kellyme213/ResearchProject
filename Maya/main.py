@@ -64,9 +64,9 @@ class ControlMainWindow(QtWidgets.QDialog):
             eulerAngles = matrix.euler
             #print(eulerAngles)
             
-            pm.setKeyframe(camera, at = 'translateX', v = 100 * line[1], t = [line[0]])
-            pm.setKeyframe(camera, at = 'translateY', v = 100 * line[2], t = [line[0]])
-            pm.setKeyframe(camera, at = 'translateZ', v = 100 * line[3], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateX', v = 1 * line[1], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateY', v = 1 * line[2], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateZ', v = 1 * line[3], t = [line[0]])
             pm.setKeyframe(camera, at = 'rotateX', v = 180 * eulerAngles[0] / 3.14, t = [line[0]])
             pm.setKeyframe(camera, at = 'rotateY', v = 180 * eulerAngles[1] / 3.14, t = [line[0]])
             pm.setKeyframe(camera, at = 'rotateZ', v = 180 * eulerAngles[2] / 3.14, t = [line[0]])

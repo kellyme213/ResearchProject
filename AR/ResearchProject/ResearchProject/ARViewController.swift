@@ -38,10 +38,11 @@ class ARViewController: UIViewController {
         
         appView.session.delegate = appView
 
+        appView.addCoaching()
         let a = ARWorldTrackingConfiguration.init()
         a.planeDetection = .horizontal
         
-        appView.session.run(a, options: .resetTracking)
+        appView.session.run(a, options: [])
         
         
         let startButton = UIButton()
