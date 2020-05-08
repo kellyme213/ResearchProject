@@ -13,6 +13,7 @@ imp.reload(FileReader)
 #http://www.brechtos.com/using-qt-designer-pyside-create-maya-2014-editor-windows/
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QFileDialog
+from PySide2.QtWidgets import QMessageBox
 from shiboken2 import wrapInstance
 import maya.OpenMayaUI as omui
 
@@ -48,7 +49,19 @@ class ControlMainWindow(QtWidgets.QDialog):
         camera = self.ui.cameraListWidget.currentItem().text()
         reader = FileReader.FileReader(file)
         fps = mel.eval('currentTimeUnitToFPS()')
-        newPoints = bakeKeys(reader.data, fps)
+        bakeFps = fps
+
+        if self.ui.customRadioButton.isChecked():
+            try:
+                bakeFps = float(self.ui.fpsTextEdit.toPlainText())
+                if (bakeFps <= 0):
+                    raise Exception
+            except Exception:
+                self.createErrorPopup("Please enter a number larger than 0 in the textbox or select the Auto FPS option.")
+                return
+
+
+        newPoints = bakeKeys(reader.data, fps, bakeFps)
         matrix = dtypes.TransformationMatrix()
         for line in newPoints:
             matrix.a00 = line[4]
@@ -64,13 +77,19 @@ class ControlMainWindow(QtWidgets.QDialog):
             eulerAngles = matrix.euler
             #print(eulerAngles)
             
-            pm.setKeyframe(camera, at = 'translateX', v = 1 * line[1], t = [line[0]])
-            pm.setKeyframe(camera, at = 'translateY', v = 1 * line[2], t = [line[0]])
-            pm.setKeyframe(camera, at = 'translateZ', v = 1 * line[3], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateX', v = 100 * line[1], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateY', v = 100 * line[2], t = [line[0]])
+            pm.setKeyframe(camera, at = 'translateZ', v = 100 * line[3], t = [line[0]])
             pm.setKeyframe(camera, at = 'rotateX', v = 180 * eulerAngles[0] / 3.14, t = [line[0]])
             pm.setKeyframe(camera, at = 'rotateY', v = 180 * eulerAngles[1] / 3.14, t = [line[0]])
             pm.setKeyframe(camera, at = 'rotateZ', v = 180 * eulerAngles[2] / 3.14, t = [line[0]])
      
+    def createErrorPopup(self, str = "Please enter a valid value."):
+        messageBox = QMessageBox(self)
+        messageBox.setText(str)
+        messageBox.setIcon(QMessageBox.Critical)
+        messageBox.setStandardButtons(QMessageBox.Ok)
+        messageBox.show()
      
 def sample(time, dataPoints, startLocation):
     numPoints = len(dataPoints)
@@ -87,8 +106,8 @@ def sample(time, dataPoints, startLocation):
             
             
             
-def bakeKeys(dataPoints, fps):
-    timeSlice = 1.0 / float(fps)
+def bakeKeys(dataPoints, fps, bakeFps):
+    timeSlice = 1.0 / float(bakeFps)
     newPoints = []
     numNewPoints = 1
     
@@ -101,13 +120,14 @@ def bakeKeys(dataPoints, fps):
     
     while (len(point) > 0):
         point[0] = numNewPoints
-        numNewPoints += 1
+        numNewPoints += int(fps / bakeFps)
         newPoints.append(point)
         time += timeSlice
         tuple = sample(time, dataPoints, currentIndex)
         point = tuple[0]
         currentIndex = tuple[1]
     return newPoints
+    
 
 if __name__ == "__main__":
     imp.reload(ImportForm)
